@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ArcadeZone - Play. Beat. Repeat.</title>
-    
-    <meta name="description" content="PixelRush - Játssz ingyenes arcade játékokkal, gyűjts pontokat és döntsd meg a rekordokat!">
+
+    <meta name="description" content="ArcadeZone - Játssz ingyenes arcade játékokkal, gyűjts pontokat és döntsd meg a rekordokat!">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -23,16 +23,17 @@
         <nav class="nav-links">
             <a href="#home">Főoldal</a>
             <a href="#games">Játékok</a>
-            <a href="#leaderboard">Ranglista</a>
+            <a href="leaderboard.html">🏆 Ranglista</a>
         </nav>
 
         <a href="#games" class="nav-button">Játék indítása</a>
     </header>
 
 
-    <!-- HERO SECTION -->
+    <!-- MAIN -->
     <main>
 
+        <!-- HERO SECTION -->
         <section class="hero" id="home">
 
             <div class="hero-content">
@@ -86,6 +87,7 @@
                     type="text"
                     id="gameSearch"
                     placeholder="🔍 Keress játékot..."
+                    autocomplete="off"
                 >
             </div>
 
@@ -93,6 +95,7 @@
             <!-- GAME CARDS -->
             <div class="games-grid">
 
+                <!-- PING PONG -->
                 <article class="game-card" data-name="ping pong">
 
                     <div class="game-image pingpong">
@@ -112,6 +115,7 @@
                 </article>
 
 
+                <!-- FLIPPER -->
                 <article class="game-card" data-name="flipper pinball">
 
                     <div class="game-image pinball">
@@ -131,6 +135,7 @@
                 </article>
 
 
+                <!-- TETRIS -->
                 <article class="game-card" data-name="tetris">
 
                     <div class="game-image tetris">
@@ -150,7 +155,8 @@
                 </article>
 
 
-                <article class="game-card" data-name="geometry runner">
+                <!-- GEOMETRY RUNNER -->
+                <article class="game-card" data-name="geometry runner neon rush">
 
                     <div class="game-image geometry">
                         <span>🔺</span>
@@ -175,7 +181,7 @@
         </section>
 
 
-        <!-- LEADERBOARD -->
+        <!-- LEADERBOARD PREVIEW -->
         <section class="leaderboard-section" id="leaderboard">
 
             <span class="section-label">GLOBAL COMPETITION</span>
@@ -183,14 +189,14 @@
             <h2>Top Players</h2>
 
             <p>
-                Hamarosan megérkezik a globális ranglista.
-                Gyűjts pontokat és kerülj a legjobbak közé!
+                Nézd meg a legjobb játékosok eredményeit,
+                és küzdj azért, hogy te is felkerülj a ranglistára!
             </p>
 
             <a href="leaderboard.html" class="leaderboard-link">
-              🏆 Ranglista
-            </a>    
-            
+                🏆 TELJES RANGLISTA →
+            </a>
+
         </section>
 
     </main>
@@ -200,10 +206,10 @@
     <footer class="footer">
 
         <a href="index.html" class="logo">
-            PIXEL<span>RUSH</span>
+            ARCADE<span>ZONE</span>
         </a>
 
-        <p>© 2026 PixelRush. All rights reserved.</p>
+        <p>© 2026 ArcadeZone. All rights reserved.</p>
 
         <p>PLAY. BEAT. REPEAT.</p>
 
