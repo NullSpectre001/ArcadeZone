@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArcadeZone - Ranglista</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .leaderboard-page {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 24px;
+      color: #fff;
+    }
+
+    .leaderboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .leaderboard-header h1 {
+      color: #a78bfa;
+      margin: 0;
+    }
+
+    .leaderboard-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .az-button {
+      border: 1px solid #8b5cf6;
+      border-radius: 9px;
+      padding: 10px 16px;
+      background: #25134a;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .az-button:hover {
+      background: #5b21b6;
+    }
+
+    .game-leaderboard {
+      background: #151326;
+      border: 1px solid #40306c;
+      border-radius: 14px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    .game-leaderboard h2 {
+      color: #c4b5fd;
+      margin-top: 0;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      text-align: left;
+      padding: 12px 8px;
+      border-bottom: 1px solid #30284b;
+    }
+
+    .leaderboard-table th {
+      color: #a78bfa;
+    }
+
+    .empty-row {
+      color: #aaa;
+      text-align: center !important;
+    }
+
+    .admin-panel {
+      display: none;
+      background: #21152e;
+      border: 1px solid #a78bfa;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .admin-panel h2 {
+      color: #c4b5fd;
+    }
+
+    .notice {
+      color: #c4b5fd;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="leaderboard-page">
+    <header class="leaderboard-header">
+      <div>
+        <h1>🏆 ArcadeZone Ranglista</h1>
+        <p>A játékok legjobb eredményei</p>
+      </div>
+
+      <div class="leaderboard-actions">
+        <a class="az-button" href="index.html">← Vissza</a>
+        <button class="az-button" id="adminLoginButton">
+          Admin belépés
+        </button>
+      </div>
+    </header>
+
+    <section id="leaderboards">
+      <article class="game-leaderboard">
+        <h2>🏓 Ping Pong – Top 10</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr><th>#</th><th>Játékos</th><th>Pontszám</th></tr>
+          </thead>
+          <tbody id="pingpongScores">
+            <tr><td colspan="3" class="empty-row">Még nincsenek online rekordok.</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="game-leaderboard">
+        <h2>🧱 Tetris – Top 10</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr><th>#</th><th>Játékos</th><th>Pontszám</th></tr>
+          </thead>
+          <tbody id="tetrisScores">
+            <tr><td colspan="3" class="empty-row">Még nincsenek online rekordok.</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="game-leaderboard">
+        <h2>🕹️ Flipper – Top 10</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr><th>#</th><th>Játékos</th><th>Pontszám</th></tr>
+          </thead>
+          <tbody id="flipperScores">
+            <tr><td colspan="3" class="empty-row">Még nincsenek online rekordok.</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="game-leaderboard">
+        <h2>⚡ Neon Rush – Top 10</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr><th>#</th><th>Játékos</th><th>Pontszám</th></tr>
+          </thead>
+          <tbody id="geometryScores">
+            <tr><td colspan="3" class="empty-row">Még nincsenek online rekordok.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="admin-panel" id="adminPanel">
+      <h2>🛡️ Adminfelület</h2>
+      <p class="notice">
+        Az adminfelület kezelőfunkciói a biztonságos szerveroldali
+        hitelesítés beállítása után lesznek elérhetők.
+      </p>
+      <p>Tervezett funkciók:</p>
+      <ul>
+        <li>Játékos eltávolítása a ranglistáról</li>
+        <li>Játékos pontszámainak nullázása</li>
+        <li>Játékos nevének törlése</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("adminLoginButton").addEventListener("click", () => {
+      alert(
+        "Az adminbelépés még nincs bekötve. " +
+        "Előbb be kell állítanunk a biztonságos szerveroldali hitelesítést."
+      );
+    });
+  </script>
+
+</body>
+</html>
