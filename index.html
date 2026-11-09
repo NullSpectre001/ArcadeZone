@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ArcadeZone - Play. Beat. Repeat.</title>
+    
+    <meta name="description" content="PixelRush - Játssz ingyenes arcade játékokkal, gyűjts pontokat és döntsd meg a rekordokat!">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            ARCADE<span>ZONE</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#home">Főoldal</a>
+            <a href="#games">Játékok</a>
+            <a href="#leaderboard">Ranglista</a>
+        </nav>
+
+        <a href="#games" class="nav-button">Játék indítása</a>
+    </header>
+
+
+    <!-- HERO SECTION -->
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    ⚡ THE ULTIMATE ARCADE EXPERIENCE
+                </span>
+
+                <h1>
+                    PLAY.<br>
+                    BEAT.<br>
+                    <span>REPEAT.</span>
+                </h1>
+
+                <p>
+                    Játssz. Gyűjts pontokat. Döntsd meg a rekordokat.
+                    Vajon te leszel a következő arcade legenda?
+                </p>
+
+                <a href="#games" class="primary-button">
+                    JÁTÉKOK FELFEDEZÉSE →
+                </a>
+
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-circle">
+                    <span>🎮</span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- GAMES SECTION -->
+        <section class="games-section" id="games">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">CHOOSE YOUR GAME</span>
+                    <h2>Játékok</h2>
+                </div>
+
+                <span class="game-count">04 JÁTÉK</span>
+            </div>
+
+
+            <!-- SEARCH -->
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="gameSearch"
+                    placeholder="🔍 Keress játékot..."
+                >
+            </div>
+
+
+            <!-- GAME CARDS -->
+            <div class="games-grid">
+
+                <article class="game-card" data-name="ping pong">
+
+                    <div class="game-image pingpong">
+                        <span>🏓</span>
+                        <span class="game-tag">ARCADE</span>
+                    </div>
+
+                    <div class="game-info">
+                        <h3>Ping Pong</h3>
+                        <p>Üsd vissza a labdát és gyűjts pontokat!</p>
+
+                        <a href="games/pingpong/index.html">
+                            PLAY NOW →
+                        </a>
+                    </div>
+
+                </article>
+
+
+                <article class="game-card" data-name="flipper pinball">
+
+                    <div class="game-image pinball">
+                        <span>🎯</span>
+                        <span class="game-tag">CLASSIC</span>
+                    </div>
+
+                    <div class="game-info">
+                        <h3>Flipper</h3>
+                        <p>Tartsd játékban a golyót és döntsd meg a rekordot!</p>
+
+                        <a href="games/flipper/index.html">
+                            PLAY NOW →
+                        </a>
+                    </div>
+
+                </article>
+
+
+                <article class="game-card" data-name="tetris">
+
+                    <div class="game-image tetris">
+                        <span>🧩</span>
+                        <span class="game-tag">PUZZLE</span>
+                    </div>
+
+                    <div class="game-info">
+                        <h3>Tetris</h3>
+                        <p>Rakd össze a blokkokat és szerezz minél több pontot!</p>
+
+                        <a href="games/tetris/index.html">
+                            PLAY NOW →
+                        </a>
+                    </div>
+
+                </article>
+
+
+                <article class="game-card" data-name="geometry runner">
+
+                    <div class="game-image geometry">
+                        <span>🔺</span>
+                        <span class="game-tag">ENDLESS</span>
+                    </div>
+
+                    <div class="game-info">
+                        <h3>Geometry Runner</h3>
+                        <p>Kerüld ki az akadályokat és juss minél messzebbre!</p>
+
+                        <a href="games/geometry/index.html">
+                            PLAY NOW →
+                        </a>
+                    </div>
+
+                </article>
+
+            </div>
+
+            <p id="noResults" hidden>Nincs ilyen játék.</p>
+
+        </section>
+
+
+        <!-- LEADERBOARD -->
+        <section class="leaderboard-section" id="leaderboard">
+
+            <span class="section-label">GLOBAL COMPETITION</span>
+
+            <h2>Top Players</h2>
+
+            <p>
+                Hamarosan megérkezik a globális ranglista.
+                Gyűjts pontokat és kerülj a legjobbak közé!
+            </p>
+
+            <div class="leaderboard-placeholder">
+                🏆 A RANGLISTA HAMAROSAN ÉRKEZIK
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <a href="index.html" class="logo">
+            PIXEL<span>RUSH</span>
+        </a>
+
+        <p>© 2026 PixelRush. All rights reserved.</p>
+
+        <p>PLAY. BEAT. REPEAT.</p>
+
+    </footer>
+
+
+    <!-- SEARCH SCRIPT -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
