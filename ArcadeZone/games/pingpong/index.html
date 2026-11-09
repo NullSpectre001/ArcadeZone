@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ping Pong | ArcadeZone</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <a href="../../index.html" class="logo">
+            ARCADE<span>ZONE</span>
+        </a>
+
+        <a href="../../index.html" class="back-button">
+            ← VISSZA A FŐOLDALRA
+        </a>
+    </header>
+
+    <main class="game-container">
+
+        <div class="game-heading">
+            <span class="eyebrow">ARCADEZONE ORIGINAL</span>
+            <h1>PING <span>PONG</span></h1>
+            <p>Keep the ball alive. Beat your record.</p>
+        </div>
+
+        <div class="scoreboard">
+            <div class="score-box">
+                <span>SCORE</span>
+                <strong id="score">0</strong>
+            </div>
+
+            <div class="score-box">
+                <span>BEST</span>
+                <strong id="best">0</strong>
+            </div>
+
+            <div class="score-box">
+                <span>SPEED</span>
+                <strong id="speed">1.0x</strong>
+            </div>
+        </div>
+
+        <div class="game-wrapper">
+
+            <canvas id="gameCanvas" width="900" height="550"></canvas>
+
+            <div class="game-overlay" id="overlay">
+
+                <div class="overlay-content">
+
+                    <span class="overlay-icon" id="overlayIcon">🏓</span>
+
+                    <h2 id="overlayTitle">READY?</h2>
+
+                    <p id="overlayText">
+                        Készen állsz a játékra?
+                        Tartsd játékban a labdát!
+                    </p>
+
+                    <button id="startButton">
+                        START GAME →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="controls">
+            <span>⌨️ MOZGÁS: A / D vagy ← / →</span>
+            <span>🖱️ EGÉR: MOZGASD AZ ÜTŐT</span>
+            <span>SPACE: ÚJRAKEZDÉS</span>
+        </div>
+
+    </main>
+
+    <footer>
+        © 2026 ARCADEZONE — PLAY. BEAT. REPEAT.
+    </footer>
+
+    <script src="game.js"></script>
+
+</body>
+</html>
