@@ -248,3 +248,25 @@ footer {
         font-size: 38px;
     }
 }
+
+.player-name-label {
+    display: block;
+    color: #b99aff;
+    font-weight: bold;
+    margin: 15px 0 8px;
+    letter-spacing: 2px;
+}
+
+#playerNameInput {
+    display: block;
+    width: 80%;
+    max-width: 280px;
+    margin: 0 auto 15px;
+    padding: 12px;
+    border: 1px solid #925cff;
+    border-radius: 8px;
+    background: #17152b;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+}
