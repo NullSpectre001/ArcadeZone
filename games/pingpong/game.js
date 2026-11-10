@@ -16,6 +16,39 @@ const overlayTitle = document.getElementById("overlayTitle");
 const overlayText = document.getElementById("overlayText");
 const overlayIcon = document.getElementById("overlayIcon");
 const startButton = document.getElementById("startButton");
+// PLAYER NAME INPUT
+const nameLabel = document.createElement("label");
+nameLabel.textContent = "Player name:";
+nameLabel.style.display = "block";
+nameLabel.style.margin = "15px 0 6px";
+nameLabel.style.color = "white";
+
+const nameInput = document.createElement("input");
+nameInput.type = "text";
+nameInput.maxLength = 16;
+nameInput.placeholder = "Enter your name...";
+nameInput.autocomplete = "nickname";
+nameInput.style.padding = "10px";
+nameInput.style.borderRadius = "8px";
+nameInput.style.border = "1px solid #925cff";
+nameInput.style.background = "#17152b";
+nameInput.style.color = "white";
+nameInput.style.marginBottom = "12px";
+nameInput.style.width = "80%";
+
+startButton.parentNode.insertBefore(nameLabel, startButton);
+startButton.parentNode.insertBefore(nameInput, startButton);
+
+let playerName = "";
+
+try {
+    playerName =
+        localStorage.getItem("arcadezone_pingpong_name") || "";
+} catch (error) {
+    console.warn("Player name could not be loaded.");
+}
+
+nameInput.value = playerName;
 
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
@@ -64,6 +97,23 @@ bestElement.textContent = best;
 // START GAME
 function startGame() {
 
+    playerName = nameInput.value.trim();
+
+    if (!playerName) {
+        nameInput.focus();
+        nameInput.placeholder = "Please enter your name!";
+        return;
+    }
+
+    try {
+        localStorage.setItem(
+            "arcadezone_pingpong_name",
+            playerName
+        );
+    } catch (error) {
+        console.warn("Player name could not be saved.");
+    }
+
     score = 0;
     speedMultiplier = 1;
 
@@ -83,15 +133,48 @@ function startGame() {
     gameOver = false;
 
     overlay.classList.add("hidden");
-
 }
 
+// SAVE PLAYER SCORE
+function savePlayerScore() {
+    if (score <= 0 || !playerName) return;
+
+    try {
+        const key = "arcadezone_pingpong_scores";
+
+        let scores = JSON.parse(
+            localStorage.getItem(key) || "[]"
+        );
+
+        if (!Array.isArray(scores)) {
+            scores = [];
+        }
+
+        scores.push({
+            name: playerName,
+            score: score,
+            date: new Date().toISOString()
+        });
+
+        scores.sort((a, b) => b.score - a.score);
+
+        scores = scores.slice(0, 10);
+
+        localStorage.setItem(key, JSON.stringify(scores));
+
+    } catch (error) {
+        console.warn("Score could not be saved.");
+    }
+}
 
 // GAME OVER
 function endGame() {
+   
 
     running = false;
     gameOver = true;
+    savePlayerScore();
+   
 
     if (score > best) {
 
@@ -114,8 +197,11 @@ function endGame() {
     overlayTitle.textContent = "GAME OVER";
 
     overlayText.innerHTML =
-        `Your Score: <strong>${score}</strong><br>
-         Best Score: <strong>${best}</strong>`;
+    `Player: <strong></strong><br>
+     Your Score: <strong>${score}</strong><br>
+     Best Score: <strong>${best}</strong>`;
+
+    overlayText.querySelector("strong").textContent = playerName;
 
     startButton.textContent = "PLAY AGAIN →";
 
