@@ -1,7 +1,7 @@
 
 /* =================================
    ARCADEZONE - PING PONG
-   ENDLESS ARCADE GAME
+   PLAYER NAME + LOCAL LEADERBOARD
 ================================= */
 
 const canvas = document.getElementById("gameCanvas");
@@ -16,25 +16,41 @@ const overlayTitle = document.getElementById("overlayTitle");
 const overlayText = document.getElementById("overlayText");
 const overlayIcon = document.getElementById("overlayIcon");
 const startButton = document.getElementById("startButton");
+
+const WIDTH = canvas.width;
+const HEIGHT = canvas.height;
+
+// =================================
 // PLAYER NAME INPUT
+// =================================
+
 const nameLabel = document.createElement("label");
-nameLabel.textContent = "Player name:";
+nameLabel.textContent = "PLAYER NAME";
 nameLabel.style.display = "block";
-nameLabel.style.margin = "15px 0 6px";
-nameLabel.style.color = "white";
+nameLabel.style.color = "#b99aff";
+nameLabel.style.fontWeight = "bold";
+nameLabel.style.margin = "15px 0 8px";
+nameLabel.style.letterSpacing = "2px";
 
 const nameInput = document.createElement("input");
 nameInput.type = "text";
+nameInput.id = "playerNameInput";
 nameInput.maxLength = 16;
-nameInput.placeholder = "Enter your name...";
+nameInput.placeholder = "Írd be a neved...";
 nameInput.autocomplete = "nickname";
-nameInput.style.padding = "10px";
-nameInput.style.borderRadius = "8px";
+
+nameInput.style.display = "block";
+nameInput.style.width = "80%";
+nameInput.style.maxWidth = "280px";
+nameInput.style.boxSizing = "border-box";
+nameInput.style.margin = "0 auto 15px";
+nameInput.style.padding = "12px";
 nameInput.style.border = "1px solid #925cff";
+nameInput.style.borderRadius = "8px";
 nameInput.style.background = "#17152b";
 nameInput.style.color = "white";
-nameInput.style.marginBottom = "12px";
-nameInput.style.width = "80%";
+nameInput.style.textAlign = "center";
+nameInput.style.fontSize = "16px";
 
 startButton.parentNode.insertBefore(nameLabel, startButton);
 startButton.parentNode.insertBefore(nameInput, startButton);
@@ -50,8 +66,9 @@ try {
 
 nameInput.value = playerName;
 
-const WIDTH = canvas.width;
-const HEIGHT = canvas.height;
+// =================================
+// GAME VARIABLES
+// =================================
 
 let running = false;
 let gameOver = false;
@@ -83,25 +100,71 @@ const keys = {
 
 let lastTime = 0;
 
-
+// =================================
 // LOAD BEST SCORE
+// =================================
+
 try {
-    best = Number(localStorage.getItem("arcadezone_pingpong_best")) || 0;
+    best = Number(
+        localStorage.getItem("arcadezone_pingpong_best")
+    ) || 0;
 } catch (error) {
     best = 0;
 }
 
 bestElement.textContent = best;
 
+// =================================
+// SAVE PLAYER SCORE
+// =================================
 
+function savePlayerScore() {
+    if (!playerName || score <= 0) {
+        return;
+    }
+
+    try {
+        const key = "arcadezone_pingpong_scores";
+
+        let scores = JSON.parse(
+            localStorage.getItem(key) || "[]"
+        );
+
+        if (!Array.isArray(scores)) {
+            scores = [];
+        }
+
+        scores.push({
+            name: playerName,
+            score: score,
+            date: new Date().toISOString()
+        });
+
+        scores.sort((a, b) => b.score - a.score);
+
+        scores = scores.slice(0, 10);
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(scores)
+        );
+
+    } catch (error) {
+        console.warn("Score could not be saved.", error);
+    }
+}
+
+// =================================
 // START GAME
+// =================================
+
 function startGame() {
 
     playerName = nameInput.value.trim();
 
     if (!playerName) {
+        nameInput.placeholder = "Először írd be a neved!";
         nameInput.focus();
-        nameInput.placeholder = "Please enter your name!";
         return;
     }
 
@@ -135,46 +198,18 @@ function startGame() {
     overlay.classList.add("hidden");
 }
 
-// SAVE PLAYER SCORE
-function savePlayerScore() {
-    if (score <= 0 || !playerName) return;
-
-    try {
-        const key = "arcadezone_pingpong_scores";
-
-        let scores = JSON.parse(
-            localStorage.getItem(key) || "[]"
-        );
-
-        if (!Array.isArray(scores)) {
-            scores = [];
-        }
-
-        scores.push({
-            name: playerName,
-            score: score,
-            date: new Date().toISOString()
-        });
-
-        scores.sort((a, b) => b.score - a.score);
-
-        scores = scores.slice(0, 10);
-
-        localStorage.setItem(key, JSON.stringify(scores));
-
-    } catch (error) {
-        console.warn("Score could not be saved.");
-    }
-}
-
+// =================================
 // GAME OVER
+// =================================
+
 function endGame() {
-   
+
+    if (!running) return;
 
     running = false;
     gameOver = true;
+
     savePlayerScore();
-   
 
     if (score > best) {
 
@@ -190,27 +225,23 @@ function endGame() {
         }
 
         bestElement.textContent = best;
-
     }
 
     overlayIcon.textContent = "💥";
     overlayTitle.textContent = "GAME OVER";
 
-    overlayText.innerHTML =
-    `Player: <strong></strong><br>
-     Your Score: <strong>${score}</strong><br>
-     Best Score: <strong>${best}</strong>`;
-
-    overlayText.querySelector("strong").textContent = playerName;
+    overlayText.textContent =
+        `${playerName} - Your Score: ${score} | Best Score: ${best}`;
 
     startButton.textContent = "PLAY AGAIN →";
 
     overlay.classList.remove("hidden");
-
 }
 
-
+// =================================
 // UPDATE SCORE
+// =================================
+
 function addPoint() {
 
     score++;
@@ -224,11 +255,12 @@ function addPoint() {
 
     speedElement.textContent =
         speedMultiplier.toFixed(1) + "x";
-
 }
 
-
+// =================================
 // UPDATE GAME
+// =================================
+
 function update(delta) {
 
     const frame = Math.min(delta / 16.667, 2);
@@ -245,45 +277,39 @@ function update(delta) {
 
     paddle.targetX = Math.max(
         paddle.width / 2,
-        Math.min(WIDTH - paddle.width / 2, paddle.targetX)
+        Math.min(
+            WIDTH - paddle.width / 2,
+            paddle.targetX
+        )
     );
 
-    paddle.x += (paddle.targetX - paddle.width / 2 - paddle.x)
-        * Math.min(1, 0.25 * frame);
-
+    paddle.x += (
+        paddle.targetX - paddle.width / 2 - paddle.x
+    ) * Math.min(1, 0.25 * frame);
 
     // BALL MOVEMENT
 
     ball.x += ball.dx * speedMultiplier * frame;
     ball.y += ball.dy * speedMultiplier * frame;
 
-
     // LEFT AND RIGHT WALLS
 
     if (ball.x - ball.radius <= 0) {
-
         ball.x = ball.radius;
         ball.dx = Math.abs(ball.dx);
-
     }
 
     if (ball.x + ball.radius >= WIDTH) {
-
         ball.x = WIDTH - ball.radius;
         ball.dx = -Math.abs(ball.dx);
-
     }
-
 
     // TOP WALL
 
     if (ball.y - ball.radius <= 0) {
-
         ball.y = ball.radius;
         ball.dy = Math.abs(ball.dy);
-
     }
-
 
     // PADDLE COLLISION
 
@@ -303,8 +329,6 @@ function update(delta) {
         const hitPosition =
             (ball.x - paddleCenter) / (paddle.width / 2);
 
-        // CHANGE BALL DIRECTION
-
         const angle = hitPosition * 1.05;
 
         const currentSpeed = Math.sqrt(
@@ -315,51 +339,40 @@ function update(delta) {
         ball.dy = -Math.abs(Math.cos(angle) * currentSpeed);
 
         addPoint();
-
     }
-
 
     // GAME OVER
 
     if (ball.y - ball.radius > HEIGHT) {
-
         endGame();
-
     }
-
 }
 
-
+// =================================
 // DRAW BACKGROUND
+// =================================
+
 function drawBackground() {
 
     ctx.fillStyle = "#0b0d1d";
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-    // GRID
-
     ctx.strokeStyle = "rgba(146,92,255,0.07)";
     ctx.lineWidth = 1;
 
     for (let x = 0; x < WIDTH; x += 45) {
-
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, HEIGHT);
         ctx.stroke();
-
     }
 
     for (let y = 0; y < HEIGHT; y += 45) {
-
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(WIDTH, y);
         ctx.stroke();
-
     }
-
-    // CENTER LINE
 
     ctx.setLineDash([10, 15]);
     ctx.strokeStyle = "rgba(55,186,255,0.25)";
@@ -370,11 +383,12 @@ function drawBackground() {
     ctx.stroke();
 
     ctx.setLineDash([]);
-
 }
 
-
+// =================================
 // DRAW PADDLE
+// =================================
+
 function drawPaddle() {
 
     ctx.save();
@@ -405,13 +419,13 @@ function drawPaddle() {
     );
 
     ctx.fill();
-
     ctx.restore();
-
 }
 
-
+// =================================
 // DRAW BALL
+// =================================
+
 function drawBall() {
 
     ctx.save();
@@ -432,23 +446,23 @@ function drawBall() {
     );
 
     ctx.fill();
-
     ctx.restore();
-
 }
 
-
+// =================================
 // MAIN DRAW
-function draw() {
+// =================================
 
+function draw() {
     drawBackground();
     drawPaddle();
     drawBall();
-
 }
 
-
+// =================================
 // GAME LOOP
+// =================================
+
 function gameLoop(timestamp) {
 
     const delta = lastTime
@@ -464,15 +478,15 @@ function gameLoop(timestamp) {
     draw();
 
     requestAnimationFrame(gameLoop);
-
 }
 
-
+// =================================
 // MOUSE AND TOUCH CONTROL
+// =================================
+
 function movePaddle(event) {
 
     const rect = canvas.getBoundingClientRect();
-
     const scaleX = WIDTH / rect.width;
 
     const position =
@@ -480,15 +494,19 @@ function movePaddle(event) {
 
     paddle.targetX = Math.max(
         paddle.width / 2,
-        Math.min(WIDTH - paddle.width / 2, position)
+        Math.min(
+            WIDTH - paddle.width / 2,
+            position
+        )
     );
-
 }
 
 canvas.addEventListener("pointermove", movePaddle);
 
-
+// =================================
 // KEYBOARD CONTROL
+// =================================
+
 document.addEventListener("keydown", event => {
 
     if (
@@ -517,7 +535,6 @@ document.addEventListener("keydown", event => {
     ) {
         startGame();
     }
-
 });
 
 document.addEventListener("keyup", event => {
@@ -535,15 +552,18 @@ document.addEventListener("keyup", event => {
     ) {
         keys.right = false;
     }
-
 });
 
-
+// =================================
 // START BUTTON
+// =================================
+
 startButton.addEventListener("click", startGame);
 
-
+// =================================
 // INITIALIZE
+// =================================
+
 overlay.classList.remove("hidden");
 
 draw();
